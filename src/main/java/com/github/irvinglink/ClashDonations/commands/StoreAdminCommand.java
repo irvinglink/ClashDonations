@@ -21,6 +21,11 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
         subCommands.add("resetData");
     }
 
+    /*
+    /storeadmin ban %player% %package% (clashstore.ban) - bans a player if they accepted the package that the command was executed for
+    /storeadmin add %player% %package% (clashstore.add) - gives the player a package to claim
+    /storeadmin resetdata %package% (clashstore.reset) - resets all the accepted data for the packages players have claimed.
+     */
     @Override
     protected void execute(CommandSender sender, String[] args) {
 
@@ -29,19 +34,18 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
             return;
         }
 
-        if (args.length == 1) {
-
-            // TEST
+        if (args.length <= 3 && (args[0].equalsIgnoreCase("add"))) {
+            sender.sendMessage("a");
             return;
         }
 
-        if (args.length == 2) {
-
+        if (args.length <= 3 && (args[0].equalsIgnoreCase("ban"))) {
+            sender.sendMessage("b");
             return;
         }
 
-        if (args.length == 3) {
-
+        if (args.length <= 2 && (args[0].equalsIgnoreCase("resetdata"))) {
+            sender.sendMessage("rd");
             return;
         }
 
