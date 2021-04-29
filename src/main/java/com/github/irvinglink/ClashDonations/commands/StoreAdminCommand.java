@@ -19,6 +19,7 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
         subCommands.put("add", "/storeadmin add <player> <package>");
         subCommands.put("ban", "/storeadmin ban <player> <package>");
         subCommands.put("resetData", "/storeadmin resetData <package>");
+        subCommands.put("reload", "/storeadmin reload");
     }
 
     /*
@@ -39,6 +40,11 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
 
             case "add":
 
+                if (!sender.hasPermission("clashstore.add")) {
+                    sender.sendMessage(chat.replace(plugin.getLang().getString("No_Permission"), true));
+                    return;
+                }
+
                 if (args.length == 3) {
 
                     String targetName = args[1];
@@ -58,7 +64,7 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
                     return;
 
                 } else
-                    sender.sendMessage(chat.replace(null, subCommands.get("add"), plugin.getLang().getString("Wrong_Usage"), true));
+                    sender.sendMessage(chat.replace(subCommands.get("add"), plugin.getLang().getString("Wrong_Usage"), true));
 
                 return;
 
@@ -70,6 +76,25 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
             case "resetdata":
 
                 return;
+
+            case "reload":
+
+                if (!sender.hasPermission("clashstore.reload")) {
+                    sender.sendMessage(chat.replace(plugin.getLang().getString("No_Permission"), true));
+                    return;
+                }
+
+                if (args.length == 1) {
+
+                    plugin.reloadConfig();
+                    sender.sendMessage(chat.replace(plugin.getLang().getString("Reload_Files"), true));
+                    return;
+
+                } else
+                    sender.sendMessage(chat.replace(subCommands.get("reload"), plugin.getLang().getString("Wrong_Usage"), true));
+
+                return;
+
             default:
                 break;
         }

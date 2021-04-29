@@ -63,6 +63,12 @@ public class Chat {
         return replace(player, null, str, text, color);
     }
 
+    public String replace(String str, String text, boolean color) {
+        return replace(null, null, str, text, color);
+    }
+
+
+
     public String replace(OfflinePlayer player, OfflinePlayer target, String str, String text, boolean color) {
 
         if (text == null) return null;

@@ -31,7 +31,7 @@ public abstract class DatabaseManager {
 
         try {
 
-            PreparedStatement stmt2 = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS packageData(UUID VARCHAR(100), NAME VARCHAR(40), PACKAGE VARCHAR(100), DATE LONG, BANNED BOOLEAN)");
+            PreparedStatement stmt2 = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS playerData(UUID VARCHAR(100), NAME VARCHAR(40), PACKAGE VARCHAR(100), DATE LONG, BANNED BOOLEAN)");
             stmt2.executeUpdate();
 
         } catch (SQLException e) {
@@ -75,6 +75,7 @@ public abstract class DatabaseManager {
     public synchronized void registerPlayer(UUID uuid, Package pack, Long millis) {
 
         try {
+
             PreparedStatement stmt = getConnection().prepareStatement("INSERT INTO playerData(UUID, NAME, PACKAGE, DATE, BANNED) VALUES(?,?,?,?,?)");
 
             stmt.setString(1, uuid.toString());
