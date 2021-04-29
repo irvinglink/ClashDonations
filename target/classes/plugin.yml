@@ -1,9 +1,0 @@
-main: com.github.irvinglink.ClashDonations.ClashDonationsPlugin
-name: ClashDonations
-version: 1.0
-api-version: 1.8
-commands:
-  confirm:
-    description: Confirm donations.
-  storeadmin:
-    description: ClashDonations plugin.
