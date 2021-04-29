@@ -31,6 +31,7 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
 
         if (args.length == 1) {
 
+            // TEST
             return;
         }
 
