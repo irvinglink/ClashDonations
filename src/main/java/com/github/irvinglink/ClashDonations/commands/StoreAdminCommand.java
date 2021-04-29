@@ -70,10 +70,19 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
 
             case "ban":
 
+                if (!sender.hasPermission("clashstore.ban")) {
+                    sender.sendMessage(chat.replace(plugin.getLang().getString("No_Permission"), true));
+                    return;
+                }
 
                 return;
 
             case "resetdata":
+
+                if (!sender.hasPermission("clashstore.reset")) {
+                    sender.sendMessage(chat.replace(plugin.getLang().getString("No_Permission"), true));
+                    return;
+                }
 
                 return;
 
@@ -87,6 +96,10 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
                 if (args.length == 1) {
 
                     plugin.reloadConfig();
+
+                    // UPDATE PACKAGES AND ITEMS
+                    plugin.getLoader().update();
+
                     sender.sendMessage(chat.replace(plugin.getLang().getString("Reload_Files"), true));
                     return;
 

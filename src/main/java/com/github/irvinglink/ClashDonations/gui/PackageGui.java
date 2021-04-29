@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 
 public final class PackageGui implements IMenu {
 
+    private final int[] packageSlots = {11, 12, 13, 14, 15};
 
     @Override
     public void onOpen(InventoryOpenEvent event) {
@@ -39,6 +40,8 @@ public final class PackageGui implements IMenu {
     @Override
     public Inventory getInventory() {
         Inventory inventory = Bukkit.createInventory(this, plugin.getConfig().getInt("Gui.package_gui.rows") * 9, chat.replace(plugin.getConfig().getString("Gui.package_gui.title"), true));
+
+
         return inventory;
     }
 

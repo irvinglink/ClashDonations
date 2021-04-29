@@ -1,7 +1,7 @@
 package com.github.irvinglink.ClashDonations.models;
 
 import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
-import com.github.irvinglink.ClashDonations.utils.Chat;
+import com.github.irvinglink.ClashDonations.utils.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

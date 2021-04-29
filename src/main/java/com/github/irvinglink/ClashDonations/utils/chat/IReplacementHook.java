@@ -1,4 +1,4 @@
-package com.github.irvinglink.ClashDonations.utils;
+package com.github.irvinglink.ClashDonations.utils.chat;
 
 import org.bukkit.OfflinePlayer;
 

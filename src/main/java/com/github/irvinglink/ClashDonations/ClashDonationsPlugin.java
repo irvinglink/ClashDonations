@@ -8,9 +8,9 @@ import com.github.irvinglink.ClashDonations.database.MySQL;
 import com.github.irvinglink.ClashDonations.database.SQLite;
 import com.github.irvinglink.ClashDonations.gui.manager.GuiManager;
 import com.github.irvinglink.ClashDonations.gui.manager.IMenu;
-import com.github.irvinglink.ClashDonations.models.Package;
 import com.github.irvinglink.ClashDonations.monitors.LoaderMonitor;
-import com.github.irvinglink.ClashDonations.utils.Chat;
+import com.github.irvinglink.ClashDonations.utils.chat.Chat;
+import com.github.irvinglink.ClashDonations.utils.items.CustomItemsUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -59,7 +59,7 @@ public final class ClashDonationsPlugin extends JavaPlugin {
 
         } else System.out.println("[ChatFilter] PlaceHolderAPI has not been found");
 
-        new StoreAdminCommand("storeadmin", "clashstore.admin", true);
+        new StoreAdminCommand("storeadmin", "", true);
         new ConfirmCommand("confirm", "", false);
 
     }
@@ -230,4 +230,5 @@ public final class ClashDonationsPlugin extends JavaPlugin {
     public LoaderMonitor getLoader() {
         return loader;
     }
+
 }

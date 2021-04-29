@@ -1,11 +1,10 @@
-package com.github.irvinglink.ClashDonations.utils;
+package com.github.irvinglink.ClashDonations.utils.chat;
 
 import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
