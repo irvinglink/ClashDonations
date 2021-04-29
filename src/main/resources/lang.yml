@@ -1,6 +1,9 @@
-Prefix: "&8[&eStore&8]"
+Prefix: '&8[&eStore&8]'
 Command_No_Exists: '%prefix% &cThat command does not exists&7.'
 No_Permission: '%prefix% &cYou do not have permission to do this&7.'
 Wrong_Usage: '%prefix% &cWrong usage. &b%command_syntax%'
 Not_Use_Symbols: '%prefix% &cYou can not use symbols&7.'
 Reload_Files: '%prefix% &aConfiguration files had been reloaded&7.'
+Package_No_Exists: '%prefix% &cPackage no exists&7.'
+Added_Player: '%prefix% &aThe player &6%target%&a has been successfully registered&7.'
+Banned_Player: '%prefix% &cThe player &7%target%&a has been successfully banned&7.'

@@ -51,7 +51,7 @@ public class Chat {
         return replace(null, null, null, text, color);
     }
 
-    public String replace(Player player, String text, boolean color) {
+    public String replace(OfflinePlayer player, String text, boolean color) {
         return replace(player, null, null, text, color);
     }
 

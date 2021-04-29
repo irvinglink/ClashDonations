@@ -2,8 +2,6 @@ package com.github.irvinglink.ClashDonations.commands;
 
 import com.github.irvinglink.ClashDonations.commands.builders.CommandBuilder;
 import com.github.irvinglink.ClashDonations.handler.PackageHandler;
-import com.github.irvinglink.ClashDonations.models.UserData;
-import com.github.irvinglink.ClashDonations.utils.UUIDUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -14,13 +12,13 @@ import java.util.*;
 
 public final class StoreAdminCommand extends CommandBuilder implements TabCompleter {
 
-    private final List<String> subCommands = Collections.synchronizedList(new ArrayList<>());
+    private final Map<String, String> subCommands = Collections.synchronizedMap(new HashMap<>());
 
     public StoreAdminCommand(String cmdName, String permission, boolean console) {
         super(cmdName, permission, console);
-        subCommands.add("add");
-        subCommands.add("ban");
-        subCommands.add("resetData");
+        subCommands.put("add", "/storeadmin add <player> <package>");
+        subCommands.put("ban", "/storeadmin ban <player> <package>");
+        subCommands.put("resetData", "/storeadmin resetData <package>");
     }
 
     /*
@@ -28,6 +26,7 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
     /storeadmin add %player% %package% (clashstore.add) - gives the player a package to claim
     /storeadmin resetdata %package% (clashstore.reset) - resets all the accepted data for the packages players have claimed.
      */
+
     @Override
     protected void execute(CommandSender sender, String[] args) {
 
@@ -43,26 +42,31 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
                 if (args.length == 3) {
 
                     String targetName = args[1];
-                    UUID targetUUID = UUIDUtils.getOfflineUUID(targetName);
+                    OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(targetName);
+
+                    UUID targetUUID = targetPlayer.getUniqueId();
 
                     String packageName = args[2];
 
                     if (!PackageHandler.containsPackage(packageName)) {
-                        sender.sendMessage("Package no exists");
+                        sender.sendMessage(chat.replace(plugin.getLang().getString("Package_No_Exists"), true));
                         return;
                     }
 
                     plugin.getDatabaseManager().registerPlayer(targetUUID, Objects.requireNonNull(PackageHandler.getPackage(packageName)), System.currentTimeMillis());
+                    sender.sendMessage(chat.replace(null, targetPlayer, plugin.getLang().getString("Added_Player"), true));
                     return;
 
                 } else
-                    sender.sendMessage("Wrong Syntax");
+                    sender.sendMessage(chat.replace(null, subCommands.get("add"), plugin.getLang().getString("Wrong_Usage"), true));
 
                 return;
 
             case "ban":
 
+
                 return;
+
             case "resetdata":
 
                 return;
@@ -81,7 +85,7 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
 
         if (args.length == 1) {
 
-            List<String> subCommandStrList = subCommands;
+            List<String> subCommandStrList = new ArrayList<>(subCommands.keySet());
 
             if (!(args[0].isEmpty())) {
 
