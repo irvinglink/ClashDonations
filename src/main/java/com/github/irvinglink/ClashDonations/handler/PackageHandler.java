@@ -27,4 +27,7 @@ public class PackageHandler {
         return packages;
     }
 
+    public static boolean containsPackage(String packageName) {
+        return packages.containsKey(packageName);
+    }
 }

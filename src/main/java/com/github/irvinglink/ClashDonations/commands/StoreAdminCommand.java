@@ -2,13 +2,15 @@ package com.github.irvinglink.ClashDonations.commands;
 
 import com.github.irvinglink.ClashDonations.commands.builders.CommandBuilder;
 import com.github.irvinglink.ClashDonations.handler.PackageHandler;
+import com.github.irvinglink.ClashDonations.models.UserData;
+import com.github.irvinglink.ClashDonations.utils.UUIDUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public final class StoreAdminCommand extends CommandBuilder implements TabCompleter {
 
@@ -34,19 +36,38 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
             return;
         }
 
-        if (args.length <= 3 && (args[0].equalsIgnoreCase("add"))) {
-            sender.sendMessage("a");
-            return;
-        }
+        switch (args[0].toLowerCase()) {
 
-        if (args.length <= 3 && (args[0].equalsIgnoreCase("ban"))) {
-            sender.sendMessage("b");
-            return;
-        }
+            case "add":
 
-        if (args.length <= 2 && (args[0].equalsIgnoreCase("resetdata"))) {
-            sender.sendMessage("rd");
-            return;
+                if (args.length == 3) {
+
+                    String targetName = args[1];
+                    UUID targetUUID = UUIDUtils.getOfflineUUID(targetName);
+
+                    String packageName = args[2];
+
+                    if (!PackageHandler.containsPackage(packageName)) {
+                        sender.sendMessage("Package no exists");
+                        return;
+                    }
+
+                    plugin.getDatabaseManager().registerPlayer(targetUUID, Objects.requireNonNull(PackageHandler.getPackage(packageName)), System.currentTimeMillis());
+                    return;
+
+                } else
+                    sender.sendMessage("Wrong Syntax");
+
+                return;
+
+            case "ban":
+
+                return;
+            case "resetdata":
+
+                return;
+            default:
+                break;
         }
 
 
