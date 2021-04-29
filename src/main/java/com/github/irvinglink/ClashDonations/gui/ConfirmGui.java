@@ -47,7 +47,7 @@ public final class ConfirmGui implements IMenu {
             inventory.setItem(confirmSlots[i], CustomItemsUtils.CustomItem.CONFIRM.getItemStack());
 
         for (int i = 0; i < declineSlots.length; i++)
-            inventory.setItem(declineSlots[i], CustomItemsUtils.CustomItem.CONFIRM.getItemStack());
+            inventory.setItem(declineSlots[i], CustomItemsUtils.CustomItem.DECLINE.getItemStack());
 
         return inventory;
     }

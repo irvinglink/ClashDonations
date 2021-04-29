@@ -38,7 +38,7 @@ public class CustomItemsUtils {
 
         if (!config.contains(path) || !config.isConfigurationSection(path)) return null;
 
-        return Material.valueOf(config.getString(path + identifier + "." + key));
+        return Material.valueOf(config.getString(path + identifier + "." + key).toUpperCase());
     }
 
     public static String getString(String gui, String identifier, String key) {
