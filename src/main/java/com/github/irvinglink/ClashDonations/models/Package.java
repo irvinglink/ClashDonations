@@ -4,10 +4,12 @@ import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
 import com.github.irvinglink.ClashDonations.utils.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public final class Package {
 
@@ -57,7 +59,11 @@ public final class Package {
 
             String[] executionArgs = execution.split(" ", 2);
 
-            switch (executionArgs[0].toLowerCase()) {
+            String args = chat.replace(player, executionArgs[1], true);
+
+            System.out.println(args);
+
+            /*switch (executionArgs[0].toLowerCase()) {
 
                 case "[message]":
 
@@ -65,7 +71,7 @@ public final class Package {
                         @Override
                         public void run() {
                             if (player.isOnline())
-                                player.getPlayer().sendMessage(chat.replace(player, executionArgs[1], true));
+                                player.getPlayer().sendMessage(args);
 
                         }
                     }.runTaskAsynchronously(plugin);
@@ -74,13 +80,12 @@ public final class Package {
 
                 case "[console]":
 
-                    System.out.println(chat.replace(player, executionArgs[1], true));
 
                     new BukkitRunnable() {
 
                         @Override
                         public void run() {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), chat.replace(player, executionArgs[1], true));
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), args);
                         }
 
                     }.runTaskAsynchronously(plugin);
@@ -93,7 +98,7 @@ public final class Package {
                         @Override
                         public void run() {
                             if (player.isOnline())
-                                Objects.requireNonNull(player.getPlayer()).performCommand(chat.replace(player, executionArgs[1], true));
+                                Objects.requireNonNull(player.getPlayer()).performCommand(args);
                         }
 
                     }.runTaskAsynchronously(plugin);
@@ -103,7 +108,7 @@ public final class Package {
                 default:
                     break;
 
-            }
+            }*/
 
         }
 
