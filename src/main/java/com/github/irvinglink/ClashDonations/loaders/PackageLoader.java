@@ -1,5 +1,6 @@
 package com.github.irvinglink.ClashDonations.loaders;
 
+import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
 import com.github.irvinglink.ClashDonations.handler.PackageHandler;
 import com.github.irvinglink.ClashDonations.models.Package;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -7,6 +8,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.List;
 
 public final class PackageLoader implements ILoader {
+
+    private final ClashDonationsPlugin plugin = ClashDonationsPlugin.getPlugin(ClashDonationsPlugin.class);
 
     @Override
     public void load() {

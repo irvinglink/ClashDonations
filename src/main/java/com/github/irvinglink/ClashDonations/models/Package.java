@@ -2,7 +2,9 @@ package com.github.irvinglink.ClashDonations.models;
 
 import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
 import com.github.irvinglink.ClashDonations.utils.chat.Chat;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +34,7 @@ public final class Package {
         this.accept_commands = accept_commands;
         this.decline_commands = decline_commands;
         this.ban_commands = ban_commands;
+
     }
 
     public void execute(OfflinePlayer player, PackageAction packageAction) {
@@ -57,18 +60,11 @@ public final class Package {
         for (int i = executions.size() - 1; i >= 0; i--) {
 
             String execution = executions.get(i);
-
             String[] executionArgs = execution.split(" ", 2);
 
-
-            System.out.println(chat);
-
-            assert chat != null;
-
             String args = chat.replace(player, this, executionArgs[1], true);
-            System.out.println(args);
 
-            /*switch (executionArgs[0].toLowerCase()) {
+            switch (executionArgs[0].toLowerCase()) {
 
                 case "[message]":
 
@@ -113,7 +109,7 @@ public final class Package {
                 default:
                     break;
 
-            }*/
+            }
 
         }
 

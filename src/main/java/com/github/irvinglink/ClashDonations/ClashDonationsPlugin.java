@@ -41,11 +41,12 @@ public final class ClashDonationsPlugin extends JavaPlugin {
 
         createFiles();
 
+        this.chat = new Chat();
+        chat.registerHook();
+
         this.guiManager = new GuiManager();
         this.loader = new LoaderMonitor();
 
-        this.chat = new Chat();
-        chat.registerHook();
 
 
     }
