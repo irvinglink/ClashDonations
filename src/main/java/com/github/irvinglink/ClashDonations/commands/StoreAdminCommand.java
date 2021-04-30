@@ -1,17 +1,23 @@
 package com.github.irvinglink.ClashDonations.commands;
 
 import com.github.irvinglink.ClashDonations.commands.builders.CommandBuilder;
+import com.github.irvinglink.ClashDonations.database.DatabaseManager;
 import com.github.irvinglink.ClashDonations.handler.PackageHandler;
-import com.github.irvinglink.ClashDonations.models.Package;
+import com.github.irvinglink.ClashDonations.models.PackageAction;
+import com.github.irvinglink.ClashDonations.models.UserData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class StoreAdminCommand extends CommandBuilder implements TabCompleter {
+
+    private final DatabaseManager databaseManager = plugin.getDatabaseManager();
 
     private final Map<String, String> subCommands = Collections.synchronizedMap(new HashMap<>());
 
@@ -60,7 +66,7 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
                         return;
                     }
 
-                    plugin.getDatabaseManager().registerPlayer(targetUUID, Objects.requireNonNull(PackageHandler.getPackage(packageName)), System.currentTimeMillis());
+                    databaseManager.registerPlayer(targetUUID, Objects.requireNonNull(PackageHandler.getPackage(packageName)), System.currentTimeMillis());
                     sender.sendMessage(chat.replace(null, targetPlayer, plugin.getLang().getString("Added_Player"), true));
                     return;
 
@@ -74,6 +80,35 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
                 if (!sender.hasPermission("clashstore.ban")) {
                     sender.sendMessage(chat.replace(plugin.getLang().getString("No_Permission"), true));
                     return;
+                }
+
+                if (args.length == 3) {
+
+                    String targetName = args[1];
+                    OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(targetName);
+
+                    UUID targetUUID = targetPlayer.getUniqueId();
+
+                    String packageName = args[2];
+
+                    if (!PackageHandler.containsPackage(packageName)) {
+                        sender.sendMessage(chat.replace(plugin.getLang().getString("Package_No_Exists"), true));
+                        return;
+                    }
+
+                    if (!databaseManager.isRegistered(targetUUID)) {
+                        sender.sendMessage(chat.replace(null, targetPlayer, plugin.getLang().getString("Player_No_Registered"), true));
+                        return;
+                    }
+
+                    for (UserData userData : databaseManager.getPlayer(targetUUID))
+                        if (userData.getPackage().getPackageName().equalsIgnoreCase(packageName)) {
+                            userData.getPackage().execute(targetPlayer, PackageAction.BAN);
+                            sender.sendMessage(chat.replace(null, targetPlayer, plugin.getLang().getString("Banned_Player"), true));
+                            return;
+                        }
+
+
                 }
 
                 return;
@@ -94,7 +129,7 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
                         return;
                     }
 
-                    plugin.getDatabaseManager().deleteFromTable("PACKAGE", packageName);
+                    databaseManager.deleteFromTable("PACKAGE", packageName);
                     sender.sendMessage(chat.replace(PackageHandler.getPackage(packageName), plugin.getLang().getString("Reset_Data"), true));
 
                     return;
@@ -113,7 +148,7 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
 
                     plugin.reloadConfig();
 
-                    // UPDATE PACKAGES AND ITEMS
+                    // UPDATE PACKAGES
                     plugin.getLoader().update();
 
                     sender.sendMessage(chat.replace(plugin.getLang().getString("Reload_Files"), true));
@@ -153,10 +188,11 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
 
         if ((args.length == 2 && args[0].equalsIgnoreCase("resetData")) ||
                 (args.length == 3 && (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("ban"))))
+
             return new ArrayList<>(PackageHandler.getPackages().keySet());
 
+        else return Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 
-        return output;
 
     }
 }

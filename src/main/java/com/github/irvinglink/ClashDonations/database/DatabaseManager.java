@@ -110,6 +110,27 @@ public abstract class DatabaseManager {
 
     }
 
+    public synchronized void removePlayerWithPackage(UUID uuid, Package pack) {
+
+        try {
+
+            if (isRegistered(uuid)) {
+
+                PreparedStatement stmt = getConnection().prepareStatement("DELETE FROM playerData WHERE UUID=? AND PACKAGE=?");
+
+                stmt.setString(1, uuid.toString());
+                stmt.setString(2, pack.getPackageName());
+
+                stmt.executeUpdate();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public synchronized void removePlayer(UUID uuid) {
 
         try {

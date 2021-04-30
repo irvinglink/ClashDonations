@@ -67,42 +67,22 @@ public final class Package {
             switch (executionArgs[0].toLowerCase()) {
 
                 case "[message]":
+                    if (player.isOnline())
+                        player.getPlayer().sendMessage(args);
 
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            if (player.isOnline())
-                                player.getPlayer().sendMessage(args);
-
-                        }
-                    }.runTaskAsynchronously(plugin);
 
                     break;
 
                 case "[console]":
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), args);
 
-
-                    new BukkitRunnable() {
-
-                        @Override
-                        public void run() {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), args);
-                        }
-
-                    }.runTaskAsynchronously(plugin);
 
                     break;
 
                 case "[player]":
-                    new BukkitRunnable() {
+                    if (player.isOnline())
+                        Objects.requireNonNull(player.getPlayer()).performCommand(args);
 
-                        @Override
-                        public void run() {
-                            if (player.isOnline())
-                                Objects.requireNonNull(player.getPlayer()).performCommand(args);
-                        }
-
-                    }.runTaskAsynchronously(plugin);
 
                     break;
 

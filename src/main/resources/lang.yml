@@ -9,3 +9,4 @@ Added_Player: '%prefix% &aThe player &6%target%&a has been successfully register
 Banned_Player: '%prefix% &cThe player &7%target%&a has been successfully banned&7.'
 Open_Confirm_Gui: '%prefix% &aOpening packages gui...'
 Reset_Data: "%prefix% &aThe players with the &6%package_name%&a had been removed from the database&7."
+Player_No_Registered: "%prefix% &cThe player &7%target%&c is not registered&7."
