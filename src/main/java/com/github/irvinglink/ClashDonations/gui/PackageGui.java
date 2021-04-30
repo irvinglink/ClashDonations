@@ -53,7 +53,7 @@ public final class PackageGui implements IMenu {
         Inventory inventory = Bukkit.createInventory(this, plugin.getConfig().getInt("Gui.package_gui.rows") * 9, chat.replace(plugin.getConfig().getString("Gui.package_gui.title"), true));
 
         for (UserData userData : userData) {
-            
+
         }
 
         return inventory;
