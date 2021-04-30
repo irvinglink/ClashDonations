@@ -3,13 +3,11 @@ package com.github.irvinglink.ClashDonations.models;
 import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
 import com.github.irvinglink.ClashDonations.utils.chat.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class Package {
 
@@ -33,7 +31,7 @@ public final class Package {
         this.ban_commands = ban_commands;
     }
 
-    public void execute(Player player, PackageAction packageAction) {
+    public synchronized void execute(OfflinePlayer player, PackageAction packageAction) {
 
         List<String> executions = Collections.synchronizedList(new ArrayList<>());
 
@@ -66,33 +64,40 @@ public final class Package {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            player.sendMessage(chat.replace(player, executionArgs[1], true));
+                            if (player.isOnline())
+                                player.getPlayer().sendMessage(chat.replace(player, executionArgs[1], true));
+
                         }
-                    }.runTask(plugin);
+                    }.runTaskAsynchronously(plugin);
 
                     break;
 
                 case "[console]":
+
+                    System.out.println(chat.replace(player, executionArgs[1], true));
+
                     new BukkitRunnable() {
+
                         @Override
                         public void run() {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), chat.replace(player, executionArgs[1], true));
                         }
-                    }.runTask(plugin);
+
+                    }.runTaskAsynchronously(plugin);
 
                     break;
 
                 case "[player]":
-                    if (player.isOnline()) {
-                        new BukkitRunnable() {
+                    new BukkitRunnable() {
 
-                            @Override
-                            public void run() {
+                        @Override
+                        public void run() {
+                            if (player.isOnline())
                                 Objects.requireNonNull(player.getPlayer()).performCommand(chat.replace(player, executionArgs[1], true));
-                            }
+                        }
 
-                        }.runTask(plugin);
-                    }
+                    }.runTaskAsynchronously(plugin);
+
                     break;
 
                 default:

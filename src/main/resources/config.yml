@@ -61,8 +61,8 @@ Packages:
     placeholder_name: "&aVIP RANK &7(LifeTime)"
     placeholder_details: "&7Permanent rank, claimable each season"
     commands_on_accept:
-      - '[console] pex user %name% group set vip'
+      - '[console] pex user %player_name% group set vip'
     commands_on_decline:
       - '[message] &eStaff have been notified that this is an unauthorized purchase, no further action is required.'
     ban_commands:
-      - '[console] ban %player% Chargeback -s'
+      - '[console] ban %player_name% Chargeback -s'

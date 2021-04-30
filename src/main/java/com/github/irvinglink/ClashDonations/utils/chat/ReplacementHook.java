@@ -23,6 +23,8 @@ public final class ReplacementHook implements IReplacementHook {
                 return str;
 
             case "player":
+            case "name":
+            case "player_name":
                 if (player != null) return player.getName();
 
             case "player_displayName":

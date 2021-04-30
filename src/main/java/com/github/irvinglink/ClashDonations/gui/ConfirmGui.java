@@ -48,7 +48,7 @@ public final class ConfirmGui implements IMenu {
         Player player = (Player) event.getWhoClicked();
 
         for (int i = 0; i < confirmSlots.length; i++)
-            if (slot == declineSlots[i]) {
+            if (slot == confirmSlots[i]) {
                 userData.getPackage().execute(player, PackageAction.ACCEPT);
                 player.closeInventory();
                 return;
