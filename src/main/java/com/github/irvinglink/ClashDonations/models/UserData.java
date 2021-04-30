@@ -27,7 +27,7 @@ public final class UserData {
         return playerName;
     }
 
-    public Package getPack() {
+    public Package getPackage() {
         return pack;
     }
 

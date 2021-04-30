@@ -109,6 +109,8 @@ public class CustomItemsUtils {
             itemMeta.setDisplayName(chat.replace(name, true));
             itemMeta.setLore(lore.stream().map(x -> chat.replace(x, true)).collect(Collectors.toList()));
 
+            itemStack.setItemMeta(itemMeta);
+
             return itemStack;
 
         }
