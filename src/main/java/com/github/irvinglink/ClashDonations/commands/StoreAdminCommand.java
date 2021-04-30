@@ -2,6 +2,7 @@ package com.github.irvinglink.ClashDonations.commands;
 
 import com.github.irvinglink.ClashDonations.commands.builders.CommandBuilder;
 import com.github.irvinglink.ClashDonations.handler.PackageHandler;
+import com.github.irvinglink.ClashDonations.models.Package;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -81,6 +82,21 @@ public final class StoreAdminCommand extends CommandBuilder implements TabComple
 
                 if (!sender.hasPermission("clashstore.reset")) {
                     sender.sendMessage(chat.replace(plugin.getLang().getString("No_Permission"), true));
+                    return;
+                }
+
+                if (args.length == 2) {
+
+                    String packageName = args[1];
+
+                    if (!PackageHandler.containsPackage(packageName)) {
+                        sender.sendMessage(chat.replace(plugin.getLang().getString("Package_No_Exists"), true));
+                        return;
+                    }
+
+                    plugin.getDatabaseManager().deleteFromTable("PACKAGE", packageName);
+                    sender.sendMessage(chat.replace(PackageHandler.getPackage(packageName), plugin.getLang().getString("Reset_Data"), true));
+
                     return;
                 }
 

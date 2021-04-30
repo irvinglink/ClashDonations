@@ -18,7 +18,7 @@ public final class ConfirmCommand extends CommandBuilder {
         if (args.length == 0) {
 
             Player player = (Player) sender;
-            Menu.openMenu(player, new PackageGui(plugin.getDatabaseManager().getPlayer()));
+            Menu.openMenu(player, new PackageGui(plugin.getDatabaseManager().getPlayer(player.getUniqueId())));
 
             player.sendMessage(chat.replace(player, plugin.getLang().getString("Open_Confirm_Gui"), true));
 

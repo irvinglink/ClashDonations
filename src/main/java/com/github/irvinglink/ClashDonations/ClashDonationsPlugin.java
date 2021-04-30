@@ -8,6 +8,7 @@ import com.github.irvinglink.ClashDonations.database.MySQL;
 import com.github.irvinglink.ClashDonations.database.SQLite;
 import com.github.irvinglink.ClashDonations.gui.manager.GuiManager;
 import com.github.irvinglink.ClashDonations.gui.manager.IMenu;
+import com.github.irvinglink.ClashDonations.listeners.InventoryListener;
 import com.github.irvinglink.ClashDonations.monitors.LoaderMonitor;
 import com.github.irvinglink.ClashDonations.utils.chat.Chat;
 import com.github.irvinglink.ClashDonations.utils.items.CustomItemsUtils;
@@ -61,6 +62,8 @@ public final class ClashDonationsPlugin extends JavaPlugin {
 
         new StoreAdminCommand("storeadmin", "", true);
         new ConfirmCommand("confirm", "", false);
+
+        getServer().getPluginManager().registerEvents(new InventoryListener(), this);
 
     }
 

@@ -1,6 +1,7 @@
 package com.github.irvinglink.ClashDonations.utils.items;
 
 import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
+import com.github.irvinglink.ClashDonations.models.Package;
 import com.github.irvinglink.ClashDonations.utils.chat.Chat;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -81,8 +82,10 @@ public class CustomItemsUtils {
     public enum CustomItem {
 
 
+        PACKAGES_SIGN(getMaterial("package_gui", "sign", "item"), getString("package_gui", "sign", "name"), getByte("package_gui", "sign", "data"), getStringList("package_gui", "sign", "lore")),
         AVAILABLE_PACKAGE(getMaterial("package_gui", "available_package", "item"), getString("package_gui", "available_package", "name"), getByte("package_gui", "available_package", "data"), getStringList("package_gui", "available_package", "lore")),
         UNAVAILABLE_PACKAGE(getMaterial("package_gui", "unvailable-package", "item"), getString("package_gui", "unvailable-package", "name"), getByte("package_gui", "unvailable-package", "data"), getStringList("package_gui", "unvailable-package", "lore")),
+        CONFIRM_SIGN(getMaterial("confirm_gui", "sign", "item"), getString("confirm_gui", "sign", "name"), getByte("confirm_gui", "sign", "data"), getStringList("confirm_gui", "sign", "lore")),
         CONFIRM(getMaterial("confirm_gui", "confirm_item", "item"), getString("confirm_gui", "confirm_item", "name"), getByte("confirm_gui", "confirm_item", "data"), getStringList("confirm_gui", "confirm_item", "lore")),
         DECLINE(getMaterial("confirm_gui", "decline_item", "item"), getString("confirm_gui", "decline_item", "name"), getByte("confirm_gui", "decline_item", "data"), getStringList("confirm_gui", "decline_item", "lore"));
 
@@ -113,6 +116,22 @@ public class CustomItemsUtils {
 
             return itemStack;
 
+        }
+
+        public ItemStack getPackageItem(Package pack) {
+
+            ItemStack itemStack = getItemStack();
+            ItemMeta itemMeta = itemStack.getItemMeta();
+
+            itemMeta.setDisplayName(chat.replace(pack, itemMeta.getDisplayName(), true));
+
+            List<String> lore = itemMeta.getLore().stream().map(x -> chat.replace(pack, x, true)).collect(Collectors.toList());
+
+            itemMeta.setLore(lore);
+
+            itemStack.setItemMeta(itemMeta);
+
+            return itemStack;
         }
 
     }

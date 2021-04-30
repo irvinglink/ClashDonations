@@ -40,19 +40,22 @@ public abstract class DatabaseManager {
 
     }
 
-    public synchronized List<UserData> getPlayer() {
+    public synchronized List<UserData> getPlayer(UUID uuid) {
+
+        if (!isRegistered(uuid)) return new ArrayList<>();
 
         List<UserData> output = Collections.synchronizedList(new ArrayList<>());
 
+
         try {
 
-            PreparedStatement stmt = getConnection().prepareStatement("INSERT INTO playerData(UUID, NAME, PACKAGE, DATE, BANNED) VALUES(?,?,?,?,?)");
+            PreparedStatement stmt = getConnection().prepareStatement("SELECT * FROM playerData WHERE UUID=?");
+            stmt.setString(1, uuid.toString());
 
             ResultSet resultSet = stmt.executeQuery();
 
-            do {
+            while (resultSet.next()) {
 
-                UUID uuid = UUID.fromString(resultSet.getString("UUID"));
                 String playerName = resultSet.getString("NAME");
 
                 Package pack = PackageHandler.getPackage(resultSet.getString("PACKAGE"));
@@ -63,13 +66,28 @@ public abstract class DatabaseManager {
 
                 output.add(new UserData(uuid, playerName, pack, date, banned));
 
-            } while (resultSet.next());
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return output;
+    }
+
+    public synchronized void deleteFromTable(String column, String value) {
+
+        try {
+
+            PreparedStatement stmt = getConnection().prepareStatement("DELETE FROM playerData WHERE " + column + "=?");
+            stmt.setString(1, value);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public synchronized void registerPlayer(UUID uuid, Package pack, Long millis) {

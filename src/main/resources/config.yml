@@ -1,7 +1,7 @@
 Database:
   type: MARIADB
   host: localhost
-  database: ChatFilter
+  database: clash_donations
   username: root
   password: password
 
@@ -10,14 +10,22 @@ Gui:
     rows: 3
     title: "Packages"
     items:
+      sign:
+        item: 'SIGN'
+        name: '&ePackages'
+        data: 0
+        lore:
+          - ''
+          - '&7Here will be displayed you purchased packages.'
+          - ''
       available_package:
         item: 'STORAGE_MINECART'
-        name: '%package-name%'
+        name: '%package_name%'
         data: 0
         lore:
           - '&7Click to authorize this purchase'
           - ''
-          - '%package-details%'
+          - '%package_details%'
           - ''
           - '&cIf you did not purchase this, please click this then click &4DECLINE'
       unvailable-package:
@@ -31,13 +39,20 @@ Gui:
     rows: 3
     title: "Confirm your package"
     items:
+      sign:
+        item: 'SIGN'
+        name: '&aCONFIRM ACTION'
+        data: 0
+        lore:
+          - 'Confirming this package will result in responsibility'
+          - 'Click Yes Or No'
       confirm_item:
-        item: 'stained_glass'
+        item: 'STAINED_GLASS'
         data: 5
         name: '&aConfirm'
         lore: []
       decline_item:
-        item: 'stained_glass'
+        item: 'STAINED_GLASS'
         data: 14
         name: '&cDecline'
         lore: []

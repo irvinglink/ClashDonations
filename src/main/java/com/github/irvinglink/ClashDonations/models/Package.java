@@ -62,7 +62,14 @@ public final class Package {
             switch (executionArgs[0].toLowerCase()) {
 
                 case "[message]":
-                    player.sendMessage(chat.replace(player, executionArgs[1], true));
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            player.sendMessage(chat.replace(player, executionArgs[1], true));
+                        }
+                    }.runTask(plugin);
+
                     break;
 
                 case "[console]":

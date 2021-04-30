@@ -19,6 +19,8 @@ public final class SQLite extends DatabaseManager {
 
                 createTables();
 
+                System.out.println("[ClashDonations] Successfully connected to the database!");
+
             }
 
         } catch (SQLException | ClassNotFoundException e) {

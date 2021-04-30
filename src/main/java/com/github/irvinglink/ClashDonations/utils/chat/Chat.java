@@ -1,10 +1,12 @@
 package com.github.irvinglink.ClashDonations.utils.chat;
 
 import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
+import com.github.irvinglink.ClashDonations.models.Package;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +52,14 @@ public class Chat {
         return replace(null, null, null, text, color);
     }
 
+    public String replace(Player player, Package pack, String text, boolean color) {
+        return replace(player, null, pack, null, text, color);
+    }
+
+    public String replace(Package pack, String text, boolean color) {
+        return replace(null, null, pack, null, text, color);
+    }
+
     public String replace(OfflinePlayer player, String text, boolean color) {
         return replace(player, null, null, text, color);
     }
@@ -66,13 +76,17 @@ public class Chat {
         return replace(null, null, str, text, color);
     }
 
-
-
     public String replace(OfflinePlayer player, OfflinePlayer target, String str, String text, boolean color) {
+        return replace(player, target, null, str, text, color);
+    }
+
+
+    public String replace(OfflinePlayer player, OfflinePlayer target, Package pack, String str, String text, boolean color) {
 
         if (text == null) return null;
 
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) text = PlaceholderAPI.setPlaceholders(player, text);
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+            text = PlaceholderAPI.setPlaceholders(player, text);
 
         Matcher matcher = this.pattern.matcher(text);
 
@@ -81,7 +95,7 @@ public class Chat {
             String var = matcher.group(1);
             if (var == null) return null;
 
-            String value = replacementHook.replace(player, target, str, var);
+            String value = replacementHook.replace(player, target, pack, str, var);
 
             if (value != null) text = text.replaceAll(Pattern.quote(matcher.group()), Matcher.quoteReplacement(value));
 

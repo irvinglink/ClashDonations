@@ -1,6 +1,7 @@
 package com.github.irvinglink.ClashDonations.utils.chat;
 
 import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
+import com.github.irvinglink.ClashDonations.models.Package;
 import org.bukkit.OfflinePlayer;
 
 public final class ReplacementHook implements IReplacementHook {
@@ -9,7 +10,7 @@ public final class ReplacementHook implements IReplacementHook {
 
     private final Chat chat = this.plugin.getChat();
 
-    public String replace(OfflinePlayer player, OfflinePlayer target, String str, String var) {
+    public String replace(OfflinePlayer player, OfflinePlayer target, Package pack, String str, String var) {
 
         switch (var) {
             case "prefix":
@@ -30,6 +31,12 @@ public final class ReplacementHook implements IReplacementHook {
 
             case "target":
                 if (target != null) return target.getName();
+
+            case "package_name":
+                if (pack != null) return pack.getPackageName();
+
+            case "package_details":
+                if (pack != null) return pack.getPlaceholder_details();
 
             default:
                 return null;
