@@ -25,7 +25,7 @@ public final class PackageLoader implements ILoader {
             List<String> decline_commands = config.getStringList(path + "." + package_identifier + ".commands_on_decline");
             List<String> ban_commands = config.getStringList(path + "." + package_identifier + ".ban_commands");
 
-            PackageHandler.addPackage(new Package(package_identifier, placeholderName, placeholderDetails, accept_commands, decline_commands, ban_commands));
+            PackageHandler.addPackage(new Package(plugin, package_identifier, placeholderName, placeholderDetails, accept_commands, decline_commands, ban_commands));
 
         }
 

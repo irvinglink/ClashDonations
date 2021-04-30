@@ -2,9 +2,7 @@ package com.github.irvinglink.ClashDonations.models;
 
 import com.github.irvinglink.ClashDonations.ClashDonationsPlugin;
 import com.github.irvinglink.ClashDonations.utils.chat.Chat;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,8 +11,8 @@ import java.util.Objects;
 
 public final class Package {
 
-    private final ClashDonationsPlugin plugin = ClashDonationsPlugin.getPlugin(ClashDonationsPlugin.class);
-    private final Chat chat = plugin.getChat();
+    private final ClashDonationsPlugin plugin;
+    private final Chat chat;
 
     private final String packageName;
     private final String placeholder_name;
@@ -24,7 +22,10 @@ public final class Package {
     private final List<String> decline_commands;
     private final List<String> ban_commands;
 
-    public Package(String packageName, String placeholder_name, String placeholder_details, List<String> accept_commands, List<String> decline_commands, List<String> ban_commands) {
+    public Package(ClashDonationsPlugin plugin, String packageName, String placeholder_name, String placeholder_details, List<String> accept_commands, List<String> decline_commands, List<String> ban_commands) {
+        this.plugin = plugin;
+        this.chat = plugin.getChat();
+
         this.packageName = packageName;
         this.placeholder_name = placeholder_name;
         this.placeholder_details = placeholder_details;
@@ -33,7 +34,7 @@ public final class Package {
         this.ban_commands = ban_commands;
     }
 
-    public synchronized void execute(OfflinePlayer player, PackageAction packageAction) {
+    public void execute(OfflinePlayer player, PackageAction packageAction) {
 
         List<String> executions = Collections.synchronizedList(new ArrayList<>());
 
@@ -59,8 +60,12 @@ public final class Package {
 
             String[] executionArgs = execution.split(" ", 2);
 
-            String args = chat.replace(player, executionArgs[1], true);
 
+            System.out.println(chat);
+
+            assert chat != null;
+
+            String args = chat.replace(player, this, executionArgs[1], true);
             System.out.println(args);
 
             /*switch (executionArgs[0].toLowerCase()) {

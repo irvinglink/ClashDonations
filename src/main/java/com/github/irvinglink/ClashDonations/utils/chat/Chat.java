@@ -6,7 +6,6 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +24,7 @@ public class Chat {
     public String str(String textToTranslate) {
         return ChatColor.translateAlternateColorCodes('&', textToTranslate);
     }
+
 
     public void registerHook() {
 
@@ -52,7 +52,7 @@ public class Chat {
         return replace(null, null, null, text, color);
     }
 
-    public String replace(Player player, Package pack, String text, boolean color) {
+    public String replace(OfflinePlayer player, Package pack, String text, boolean color) {
         return replace(player, null, pack, null, text, color);
     }
 
